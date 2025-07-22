@@ -1,0 +1,11 @@
+setup.py
+source/gLV_model/__init__.py
+source/gLV_model/data_proc.py
+source/gLV_model/gLV_sim.py
+source/gLV_model/plot_utili.py
+source/gLV_model/ridge_reg.py
+source/source.egg-info/PKG-INFO
+source/source.egg-info/SOURCES.txt
+source/source.egg-info/dependency_links.txt
+source/source.egg-info/requires.txt
+source/source.egg-info/top_level.txt

@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: source
+Version: 0.1
+Requires-Python: >=3.6
+Requires-Dist: numpy
+Requires-Dist: matplotlib
