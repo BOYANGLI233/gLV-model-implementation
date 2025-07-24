@@ -3,5 +3,8 @@
         "*.copilotmd": "vscode.markdown.preview.editor",
         "file:/**/*.csv": "jupyter-data-wrangler"
     },
-    "python.analysis.autoImportCompletions": true
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.extraPaths": [
+        "./source"
+    ]
 }
