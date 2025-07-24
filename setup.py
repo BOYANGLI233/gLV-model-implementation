@@ -1,13 +1,15 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='source',
-    version='0.1',
-    packages=find_packages(where='source'),
-    package_dir={'': 'source'},
+    name="microbInfer",
+    version="0.1.0",
+    packages=find_packages(),
+    description="A package for microbial interactions inference",
     install_requires=[
-        'numpy',
-        'matplotlib',
+        "numpy",
+        "pandas",
+        "scipy",
+        "matplotlib",
     ],
-    python_requires='>=3.6',
+    python_requires=">=3.10",
 )
