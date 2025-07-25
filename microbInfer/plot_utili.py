@@ -1,4 +1,3 @@
-from ctypes.macholib import dyld
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
@@ -98,6 +97,7 @@ def plot_simulation(species, orig_data, orig_time, sim_data, sim_time):
     
     ax2.set_title("Simulated dynamics")
     ax2.set_xlabel('Time (days)')
+    ax2.set_xticks(orig_time)  # Align x-ticks with original data
     ax2.set_ylabel('Log10(Abundance)')
 
     # Add a global legend
