@@ -1,0 +1,14 @@
+# Ignore compiled Python files
+__pycache__/
+
+# Ignore IDE settings
+.vscode/
+
+# Ignore system files
+.DS_Store
+
+# Distribution
+*.egg-info/
+
+# Paper
+paper/

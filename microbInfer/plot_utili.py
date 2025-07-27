@@ -78,7 +78,7 @@ def plot_simulation(species, orig_data, orig_time, sim_data, sim_time, sim_dx):
     
     ax1.set_title("Original data")
     ax1.set_xlabel('Time (days)')
-    ax1.set_ylabel('Log10(Abundance)')
+    ax1.set_ylabel('Log10 Abundance')
 
     # Subplot 2: Derivatives plot (top-right, position [0,1])
     ax2 = fig.add_subplot(gs[0, 1])
@@ -119,10 +119,16 @@ def plot_simulation(species, orig_data, orig_time, sim_data, sim_time, sim_dx):
     ax3.set_title("Simulated dynamics")
     ax3.set_xlabel('Time (days)')
     ax3.set_xticks(orig_time)  # Align x-ticks with original data
-    ax3.set_ylabel('Log10(Abundance)')
+    ax3.set_ylabel('Log10 Abundance')
 
     # Add a global legend at the bottom
     handles, labels = ax3.get_legend_handles_labels()
-    fig.legend(handles, labels, loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.05))
+    fig.legend(handles, labels, loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.02))
+
+    # Adjust layout to prevent clipping when saving
+    plt.tight_layout()
+    
+    # Add extra space at the bottom for the legend
+    fig.subplots_adjust(bottom=0.15)
 
     return fig
