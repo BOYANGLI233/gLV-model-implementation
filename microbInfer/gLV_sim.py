@@ -40,7 +40,6 @@ def gLV_simulation(t_span, num_t, x0, theta, x_intro, perturb_start_end=None):
     num_sim = len(t_intro) 
     sim = [0] * num_sim
     sim_t = [0] * num_sim
- 
 
     for s in range(num_sim):
         x0_sim = np.zeros(num_x)
@@ -59,8 +58,8 @@ def gLV_simulation(t_span, num_t, x0, theta, x_intro, perturb_start_end=None):
             established_x = np.where(x_intro < t_intro[s])[0]
             x0_sim[active_x] = x0[:, s][active_x]
             x0_sim[established_x] = sim[s - 1][established_x, -1]
-
-        x = solve_ivp(f, sim_start_end, x0_sim, method='LSODA', args=(theta, perturb_start_end), dense_output=True)
+        
+        x = solve_ivp(f, sim_start_end, x0_sim, method='Radau', args=(theta, perturb_start_end), dense_output=True)
 
         if s == 0:
             sim[s] = x.sol(t)  # Store the simulation results for each species
@@ -72,4 +71,9 @@ def gLV_simulation(t_span, num_t, x0, theta, x_intro, perturb_start_end=None):
     x_sim = np.hstack(sim)
     t_sim = np.hstack(sim_t)
 
-    return x_sim, t_sim
+    dx_sim = np.zeros((num_x, t_sim.shape[0]))  # Initialize dx_sim array
+
+    for i, t_i in enumerate(t_sim):
+        dx_sim[:, i] = f(t_i, x_sim[:, i], theta, perturb_start_end)
+
+    return x_sim, t_sim, dx_sim

@@ -51,14 +51,14 @@ def plot_model_parameters(mu, M, epsilon, species):
 
 
 # define the function to plot the microbial dynamics
-def plot_simulation(species, orig_data, orig_time, sim_data, sim_time):
+def plot_simulation(species, orig_data, orig_time, sim_data, sim_time, sim_dx):
     
-    # Set up figure and subplots
-    fig = plt.figure(figsize=(16, 8))
-    gs = gridspec.GridSpec(1, 2, hspace=0.3, wspace=0.3)
+    # Set up figure and subplots with 2x2 layout
+    fig = plt.figure(figsize=(16, 12))
+    gs = gridspec.GridSpec(2, 2, hspace=0.3, wspace=0.3)
     color = plt.cm.tab20.colors[:len(species)]  # Assign each species a unique color
 
-    # Original data plot
+    # Subplot 1: Original data plot (top-left, position [0,0])
     ax1 = fig.add_subplot(gs[0, 0])
     
     # Ensure data is float64 for precision
@@ -80,8 +80,29 @@ def plot_simulation(species, orig_data, orig_time, sim_data, sim_time):
     ax1.set_xlabel('Time (days)')
     ax1.set_ylabel('Log10(Abundance)')
 
-    # Simulated data plot (similar approach)
+    # Subplot 2: Derivatives plot (top-right, position [0,1])
     ax2 = fig.add_subplot(gs[0, 1])
+    
+    # Ensure derivatives data is float64
+    sim_dx = sim_dx.astype(np.float64)
+        
+    # Plot derivatives as line plots for each species
+    for sp in range(len(species)):
+        ax2.plot(sim_time, sim_dx[sp, :], color=color[sp], label=species[sp], linewidth=2)
+    
+    ax2.set_title("Computed Derivatives (dx/dt)")
+    ax2.set_xlabel('Time (days)')
+    ax2.set_ylabel('dx/dt')
+    ax2.grid(True, alpha=0.3)
+        
+    # Add horizontal line at y=0 for reference
+    ax2.axhline(y=0, color='black', linestyle='--', alpha=0.5)
+        
+    # Set x-axis to match simulation time range
+    ax2.set_xlim([sim_time[0], sim_time[-1]])
+        
+    # Subplot 3: Simulated data plot (bottom row, spanning both columns [1,:])
+    ax3 = fig.add_subplot(gs[1, :])  # Span both columns in the second row
     sim_data = sim_data.astype(np.float64)
     sim_total = np.sum(sim_data, axis=0)
     log_sim_total = np.log10(sim_total) + 11
@@ -91,17 +112,17 @@ def plot_simulation(species, orig_data, orig_time, sim_data, sim_time):
     
     for sp in range(len(species)):
         species_height = rel_sim[sp] * log_sim_total
-        ax2.bar(sim_time, species_height, width=0.6,
+        ax3.bar(sim_time, species_height, width=0.1,
                 bottom=bottom, color=color[sp], label=species[sp])
         bottom += species_height
     
-    ax2.set_title("Simulated dynamics")
-    ax2.set_xlabel('Time (days)')
-    ax2.set_xticks(orig_time)  # Align x-ticks with original data
-    ax2.set_ylabel('Log10(Abundance)')
+    ax3.set_title("Simulated dynamics")
+    ax3.set_xlabel('Time (days)')
+    ax3.set_xticks(orig_time)  # Align x-ticks with original data
+    ax3.set_ylabel('Log10(Abundance)')
 
-    # Add a global legend
-    handles, labels = ax2.get_legend_handles_labels()
+    # Add a global legend at the bottom
+    handles, labels = ax3.get_legend_handles_labels()
     fig.legend(handles, labels, loc='lower center', ncol=4, bbox_to_anchor=(0.5, -0.05))
 
     return fig
