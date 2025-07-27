@@ -1,0 +1,10 @@
+matplotlib
+
+numpy 
+
+openpyxl 
+
+pandas 
+
+scipy 
+
