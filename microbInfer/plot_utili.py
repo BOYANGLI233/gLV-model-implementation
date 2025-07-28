@@ -4,7 +4,12 @@ from matplotlib.colors import LinearSegmentedColormap
 from matplotlib import gridspec
 
 # Define a function to visualise the model parameters
-def plot_model_parameters(mu, M, epsilon, species):
+def plot_model_parameters(theta, species):
+
+    species_num = len(species)
+    M = theta[:, :species_num]
+    mu = theta[:, species_num]
+    epsilon = theta[:, -1]
 
     fig= plt.figure(figsize=(12, 6))
     gs = fig.add_gridspec(1, 3, width_ratios=[1, 2, 1])  # Middle plot twice as wide
